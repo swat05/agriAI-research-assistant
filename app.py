@@ -86,7 +86,7 @@ if api_key and not st.session_state.ready:
     try:
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.0-flash",
             system_instruction=SYSTEM_PROMPT
         )
         st.session_state.chat_session = model.start_chat(history=[])
@@ -135,7 +135,7 @@ if not st.session_state.ready:
         try:
             genai.configure(api_key=manual_key)
             model = genai.GenerativeModel(
-                model_name="gemini-1.5-flash",
+                model_name="gemini-2.0-flash",
                 system_instruction=SYSTEM_PROMPT
             )
             st.session_state.chat_session = model.start_chat(history=[])
