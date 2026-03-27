@@ -1,50 +1,48 @@
+
 import streamlit as st
 import google.generativeai as genai
 import os
 
 st.set_page_config(
     page_title="AgriAI Research Assistant",
-    page_icon="\U0001F33E",
+    page_icon="🌾",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@300;400;500&display=swap');
-.stApp { background: #f0f4f0; font-family: 'Source Sans 3', sans-serif; }
+.stApp { background: #f0f4f0; }
 .hero {
     background: linear-gradient(135deg, #1a3a2a 0%, #2d6a4f 60%, #1D9E75 100%);
     padding: 2rem; border-radius: 16px; margin-bottom: 1.5rem;
 }
 .hero h1 { color: white; font-size: 2rem; margin: 0 0 0.3rem; }
 .hero p { color: #a8d5b5; margin: 0; font-size: 1rem; }
-.section-title {
-    font-size: 1rem; color: #1a3a2a; font-weight: 600;
+.sec { font-size: 1rem; color: #1a3a2a; font-weight: 600;
     margin: 1.2rem 0 0.6rem; padding-left: 10px;
-    border-left: 3px solid #1D9E75;
-}
-div[data-testid="stSidebar"] { background: #1a3a2a; }
-div[data-testid="stSidebar"] * { color: #c8e6c9 !important; }
+    border-left: 3px solid #1D9E75; }
 #MainMenu, footer, header { visibility: hidden; }
 </style>
 """, unsafe_allow_html=True)
 
-SYSTEM_PROMPT = """You are AgriAI, a highly specialized AI research assistant for:
-- PhD research in AI/ML for agricultural plant disease detection
-- Assistant Professor duties: teaching, course design, student guidance
-- Deep learning model development (CNN, ViT, YOLO, ResNet, EfficientNet)
-- Academic paper writing, literature reviews, and grant proposals
-- Rice, wheat, tomato, and other crop disease identification
-Your user is an Assistant Professor with 5 years of experience pursuing a PhD in AI/ML 
-applied to agriculture, focusing on plant disease detection, based in India.
-Always respond with technically accurate research-grade content and practical PyTorch code."""
+SYSTEM_PROMPT = (
+    "You are AgriAI, a highly specialized AI research assistant for: "
+    "PhD research in AI/ML for agricultural plant disease detection, "
+    "Assistant Professor duties: teaching, course design, student guidance, "
+    "Deep learning model development (CNN, ViT, YOLO, ResNet, EfficientNet), "
+    "Academic paper writing, literature reviews, and grant proposals, "
+    "Rice, wheat, tomato, and other crop disease identification. "
+    "Your user is an Assistant Professor with 5 years of experience pursuing a PhD in AI/ML "
+    "applied to agriculture, focusing on plant disease detection, based in India. "
+    "Always respond with technically accurate research-grade content and practical PyTorch code."
+)
 
 MODULES = [
     {
-        "icon": "\U0001F52C",
+        "icon": "🔬",
         "title": "Research",
-        "desc": "Literature reviews & gap analysis",
+        "desc": "Literature reviews and gap analysis",
         "prompts": [
             "Write a literature review on CNN-based rice disease detection (2020-2024)",
             "What are the current research gaps in AI-based plant disease detection?",
@@ -53,8 +51,8 @@ MODULES = [
         ]
     },
     {
-        "icon": "\U0001F4BB",
-        "title": "Code & Models",
+        "icon": "💻",
+        "title": "Code and Models",
         "desc": "PyTorch, YOLO, ViT code generation",
         "prompts": [
             "Write PyTorch code for ResNet50 transfer learning on rice disease dataset",
@@ -64,7 +62,7 @@ MODULES = [
         ]
     },
     {
-        "icon": "\U0001F4DD",
+        "icon": "📝",
         "title": "Paper Writing",
         "desc": "Abstracts, introductions, methodology",
         "prompts": [
@@ -75,7 +73,7 @@ MODULES = [
         ]
     },
     {
-        "icon": "\U0001F393",
+        "icon": "🎓",
         "title": "Teaching",
         "desc": "Lecture notes, quizzes, syllabus",
         "prompts": [
@@ -86,9 +84,9 @@ MODULES = [
         ]
     },
     {
-        "icon": "\U0001F5C3",
+        "icon": "🗃️",
         "title": "Datasets",
-        "desc": "Data collection & augmentation",
+        "desc": "Data collection and augmentation",
         "prompts": [
             "List all publicly available rice disease datasets with download links",
             "How to collect and annotate rice disease images in field in India?",
@@ -97,7 +95,7 @@ MODULES = [
         ]
     },
     {
-        "icon": "\U0001F4CA",
+        "icon": "📊",
         "title": "Evaluation",
         "desc": "Metrics, benchmarking, Grad-CAM",
         "prompts": [
@@ -139,7 +137,7 @@ if api_key and not st.session_state.ready:
         st.session_state.ready = False
 
 with st.sidebar:
-    st.markdown("## \U0001F33E AgriAI")
+    st.markdown("## 🌾 AgriAI")
     if st.session_state.ready:
         st.success("Connected!")
     st.markdown("---")
@@ -152,19 +150,21 @@ with st.sidebar:
         st.rerun()
 
 st.markdown("""
-<div class="hero">
-    <h1>\U0001F33E AgriAI Research Assistant</h1>
-    <p>AI-powered companion for plant disease detection research, code, papers and teaching — FREE</p>
+<div class='hero'>
+    <h1>🌾 AgriAI Research Assistant</h1>
+    <p>AI-powered companion for plant disease detection — research, code, papers and teaching</p>
 </div>
 """, unsafe_allow_html=True)
 
 if not st.session_state.ready:
-    st.warning("\U0001F511 Enter your free Gemini API key to start:")
+    st.warning("🔑 Enter your free Gemini API key to start:")
     col1, col2 = st.columns([4, 1])
     with col1:
-        manual_key = st.text_input("key", type="password",
+        manual_key = st.text_input(
+            "key", type="password",
             placeholder="AIzaSy... get free key at aistudio.google.com/app/apikey",
-            label_visibility="collapsed")
+            label_visibility="collapsed"
+        )
     with col2:
         if st.button("Connect", use_container_width=True):
             if manual_key:
@@ -182,39 +182,38 @@ if not st.session_state.ready:
     st.caption("Get free key: aistudio.google.com/app/apikey")
     st.divider()
 
-st.markdown("<div class=\'section-title\'>Select a Module</div>", unsafe_allow_html=True)
+st.markdown("<div class='sec'>Select a Module</div>", unsafe_allow_html=True)
 
 cols = st.columns(6)
 for i, mod in enumerate(MODULES):
     with cols[i]:
-        if st.button(
-            f"{mod['icon']} {mod['title']}\n{mod['desc']}",
-            key=f"mod_{i}",
-            use_container_width=True
-        ):
+        label = mod["icon"] + " " + mod["title"]
+        if st.button(label, key="mod_" + str(i), use_container_width=True):
             st.session_state.active_module = i
             st.rerun()
 
 if st.session_state.active_module is not None:
     mod = MODULES[st.session_state.active_module]
-    st.markdown(f"<div class=\'section-title\'>{mod['icon']} {mod['title\']} — Quick Prompts</div>", unsafe_allow_html=True)
+    title = mod["icon"] + " " + mod["title"] + " — Quick Prompts"
+    st.markdown("<div class='sec'>" + title + "</div>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     for j, prompt in enumerate(mod["prompts"]):
         with (col1 if j % 2 == 0 else col2):
-            if st.button(f"▶  {prompt}", key=f"p_{j}", use_container_width=True):
+            if st.button("▶  " + prompt, key="p_" + str(j), use_container_width=True):
                 st.session_state.inject_prompt = prompt
 
 st.divider()
-st.markdown("<div class=\'section-title\'>\U0001F4AC Chat</div>", unsafe_allow_html=True)
+st.markdown("<div class='sec'>💬 Chat</div>", unsafe_allow_html=True)
 
 if not st.session_state.messages:
     if st.session_state.ready:
-        st.success("AgriAI is ready! Select a module above or type your question below.")
+        st.success("✅ AgriAI is ready! Select a module above or type your question below.")
     else:
-        st.info("Connect your API key above, then select a module to start!")
+        st.info("👆 Connect your API key above, then select a module to start!")
 else:
     for msg in st.session_state.messages:
-        with st.chat_message(msg["role"], avatar="\U0001F33E" if msg["role"] == "assistant" else "\U0001F464"):
+        avatar = "🌾" if msg["role"] == "assistant" else "👤"
+        with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
 
 injected = st.session_state.pop("inject_prompt", None)
@@ -225,10 +224,10 @@ if prompt:
     if not st.session_state.ready:
         st.error("Please connect your Gemini API key first!")
         st.stop()
-    with st.chat_message("user", avatar="\U0001F464"):
+    with st.chat_message("user", avatar="👤"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("assistant", avatar="\U0001F33E"):
+    with st.chat_message("assistant", avatar="🌾"):
         with st.spinner("AgriAI is thinking..."):
             try:
                 response = st.session_state.chat_session.send_message(prompt)
@@ -242,4 +241,4 @@ if prompt:
                 if "429" in err or "quota" in err.lower():
                     st.error("Rate limit hit. Wait 1 minute and try again.")
                 else:
-                    st.error(f"Error: {err}")
+                    st.error("Error: " + err)
